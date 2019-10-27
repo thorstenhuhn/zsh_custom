@@ -23,11 +23,6 @@ qaz-preview() {
 }
 
 alias cd..='cd ../'                         # common typo
-alias ..='cd ../'                           # go back 1 directory level
-alias ...='cd ../../'                       # go back 2 directory levels
-alias .3='cd ../../../'                     # go back 3 directory levels
-alias .4='cd ../../../../'                  # go back 4 directory levels
-
 alias gs='git status'                       # git status (I don't use ghostview)
 alias lb='open -a Launchbar $@'             # launchbar instand send
 alias less='less -FSRXc'                    # preferred 'less' implementation
