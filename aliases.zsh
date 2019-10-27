@@ -23,7 +23,6 @@ qaz-preview() {
 }
 
 alias cd..='cd ../'                         # common typo
-alias gs='git status'                       # git status (I don't use ghostview)
 alias lb='open -a Launchbar $@'             # launchbar instand send
 alias less='less -FSRXc'                    # preferred 'less' implementation
 alias ll='ls -l'                            # list long
