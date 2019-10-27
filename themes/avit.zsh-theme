@@ -9,7 +9,7 @@ ${time}$(_user_host)${_current_dir} $(git_prompt_info)
 
 PROMPT2='%{$fg[$CARETCOLOR]%}◀%{$reset_color%} '
 
-RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) %{$(echotc DO 1)%}'
+RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status)%{$reset_color%} %{$(echotc DO 1)%}'
 
 local _current_dir="%{$fg_bold[blue]%}%~%{$reset_color%}"
 local _hist_no="%{$fg[grey]%}%h%{$reset_color%}"
