@@ -101,7 +101,8 @@ function _git_prompt_info()
         _alert=1
       fi
       if [ "$_ahead" -ne "0" ]; then
-        _status="${_status} ↑${_ahead}"
+        test -n "${_status}" && _status="${_status} "
+        _status="${_status}↑${_ahead}"
         _alert=1
       fi
     fi
