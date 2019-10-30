@@ -4,7 +4,7 @@
 time="%(?.%{$bg[blue]%}.%{$bg[red]%})%{$fg[white]%} %D{%H:%M} %{$reset_color%} "
 
 PROMPT='
-${time}$(_user_host)${_current_dir} $(git_prompt_info)
+${time}$(_user_host)${_current_dir}$(_git_prompt_info)
 %{$fg[$CARETCOLOR]%}▶%{$resetcolor%} '
 
 PROMPT2='%{$fg[$CARETCOLOR]%}◀%{$reset_color%} '
@@ -76,6 +76,68 @@ function _git_time_since_commit() {
     color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL
     echo "$color$commit_age%{$reset_color%}"
   fi
+}
+
+function _git_prompt_info()
+{
+  local _desc="$(git symbolic-ref HEAD 2>/dev/null)"
+  local _status
+  local _alert
+  if [ -n "$_desc" ]; then
+    # we have a branch
+    _desc=${_desc##refs/heads/};
+
+    # check if we defer from remote branch (assumes regular fetches!)
+    set -- $(git rev-list --left-right --count @{u}...HEAD 2>/dev/null)
+    local _behind="$1"
+    local _ahead="$2"
+    if [ -z "$_behind" ]; then
+      # error, assuming missing upstream
+      _status="↑NO"
+      _alert=1
+    else
+      if [ "$_behind" -ne "0" ]; then
+        _status="↓${_behind}"
+        _alert=1
+      fi
+      if [ "$_ahead" -ne "0" ]; then
+        _status="${_status} ↑${_ahead}"
+        _alert=1
+      fi
+    fi
+
+  else
+    # not a git directory or detached head
+    # => try to get tag name
+    _desc="$(git describe --tags HEAD 2>/dev/null)"
+  fi
+
+  # did we finally get any git information?
+  if [ -n "$_desc" ]; then
+    # check for modifications (hopefully fastest way)
+    if [ "$(git status -suno 2>/dev/null)" ]; then
+      # we have changes
+      _desc="${_desc}∙"
+      _alert=1
+    fi
+
+    # add behind/ahead status (reliable only if fetching regularly)
+    local _prompt="${_desc}"
+    if [ -n "$_status" ]; then
+      _prompt="${_prompt} ${_status}"
+    fi
+    _prompt=" ($_prompt)"
+
+    # use warning color if necessary
+    if [ -n "$_alert" ]; then
+      _prompt="%{$fg[yellow]%}$_prompt%{$reset_color%}"
+    else
+      _prompt="%{$fg[green]%}$_prompt%{$reset_color%}"
+    fi
+    echo -n $_prompt
+
+  fi
+
 }
 
 if [[ $USER == "root" ]]; then
