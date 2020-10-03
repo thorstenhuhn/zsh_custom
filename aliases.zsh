@@ -11,8 +11,9 @@ alias mkdir='mkdir -pv'                     # preferred 'mkdir' implementation
 alias mpshow='security cms -D -i'           # show content of provisioning profile
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 alias vi='/usr/local/bin/vim'
-alias python='/usr/local/bin/python3'
-alias pip='/usr/local/bin/pip3'
+# this is dangerous when using virtualenv
+#alias python='/usr/local/bin/python3'
+#alias pip='/usr/local/bin/pip3'
 alias sed='/usr/local/bin/gsed'
 
 alias cai='cloudaccess p -a dbv3-iat'
