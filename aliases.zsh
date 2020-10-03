@@ -25,10 +25,9 @@ alias infra='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/infra/'
 
 switch-ansible() {
 	ANSIBLE_VERSION=$1
-	for file in `ls /var/ansible-${ANSIBLE_VERSION}/bin/ansible*`; do
-		alias $(basename $file)="$file"
-	done
+	# remove existing ansible versions from PATH
+	PATH=$(echo ${PATH} | awk -v RS=: -v ORS=: '/ansib/ {next} {print}' | sed 's/:*$//')
+	export PATH=$PATH:/var/ansible-${ANSIBLE_VERSION}/bin
 }
 
-switch-ansible 2.4
-
+test -d /var/ansible-2.9 && switch-ansible 2.9
