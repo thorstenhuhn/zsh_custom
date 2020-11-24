@@ -11,9 +11,6 @@ alias mkdir='mkdir -pv'                     # preferred 'mkdir' implementation
 alias mpshow='security cms -D -i'           # show content of provisioning profile
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 alias vi='/usr/local/bin/vim'
-# this is dangerous when using virtualenv
-#alias python='/usr/local/bin/python3'
-#alias pip='/usr/local/bin/pip3'
 alias sed='/usr/local/bin/gsed'
 
 alias cai='cloudaccess p -a dbv3-iat'
@@ -27,7 +24,8 @@ switch-ansible() {
 	ANSIBLE_VERSION=$1
 	# remove existing ansible versions from PATH
 	PATH=$(echo ${PATH} | awk -v RS=: -v ORS=: '/ansib/ {next} {print}' | sed 's/:*$//')
-	export PATH=$PATH:/var/ansible-${ANSIBLE_VERSION}/bin
+	export PATH=$PATH:~/.ansible/versions/${ANSIBLE_VERSION}/bin
 }
 
-test -d /var/ansible-2.9 && switch-ansible 2.9
+# enable ansible default version
+test -d ~/.ansible/versions/2.9 && switch-ansible 2.9
