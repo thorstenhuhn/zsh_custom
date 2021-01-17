@@ -20,6 +20,8 @@ alias buchung='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/bahndirekt/cloud
 alias himpps='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/himpps/cloudformation'
 alias infra='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/infra/'
 
+alias cat='bat --paging=never'
+
 switch-ansible() {
 	ANSIBLE_VERSION=$1
 	# remove existing ansible versions from PATH
