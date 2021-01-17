@@ -21,6 +21,7 @@ alias himpps='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/himpps/cloudforma
 alias infra='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/infra/'
 
 alias cat='bat --paging=never'
+alias catp='bat --paging=never --style=plain'
 
 switch-ansible() {
 	ANSIBLE_VERSION=$1
