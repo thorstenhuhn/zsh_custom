@@ -1,7 +1,7 @@
 #cd() { builtin cd "$@"; ls -l; }           # always list directory contents upon 'cd'
 mcd () { mkdir -p "$1" && cd "$1"; }        # make new directory and jump inside
 #ql () { qlmanage -p "$*" >& /dev/null; }    # quicklook preview
-aws-decode-message() { aws --profile saml sts decode-authorization-message --encoded-message "$@" --output text; }
+aws-decode-message() { aws sts decode-authorization-message --encoded-message "$@" --output text; }
 
 alias cd..='cd ../'                         # common typo
 alias lb='open -a Launchbar $@'             # launchbar instand send
