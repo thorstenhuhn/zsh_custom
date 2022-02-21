@@ -23,6 +23,18 @@ alias infra='cd ~/Dropbox/Entwicklung/AWS/dbv-lift-shift/dbv3/infra/'
 alias cat='bat --paging=never'
 alias catp='bat --paging=never --style=plain'
 
+alias ci='checkin'
+alias co='checkout'
+
+alias kgn='kubectl get nodes --output=custom-columns="NAME":".metadata.name","STATUS":".status.conditions[?(@.status==\"True\")].type","ROLE":".metadata.labels.node\.kubernetes\.io/role"'
+alias images='kubectl get pods --output=custom-columns="NAME":".metadata.name","IMAGES":".spec.containers[*].image"'
+alias cm='f() { k get cm $1 -o jsonpath={".data"} | jq };f'
+alias pods='k get pods --output jsonpath="{range .items[*]}{@.metadata.name} {end}"'
+alias cusers='for pod in `k get pods --output jsonpath="{range .items[*]}{@.metadata.name} {end}"`; do echo -n "$pod " && k exec -it $pod -- id; done | column -t -s " "'
+
+# warning: this overwrites alias from git plugin
+alias gr='/usr/local/lib/node_modules//git-run/bin/gr'
+
 switch-ansible() {
 	ANSIBLE_VERSION=$1
 	# remove existing ansible versions from PATH

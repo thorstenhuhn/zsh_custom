@@ -4,7 +4,7 @@
 time="%(?.%{$bg[blue]%}.%{$bg[red]%})%{$fg[white]%} %D{%H:%M} %{$reset_color%} "
 
 PROMPT='
-${time}$(_user_host)${_current_dir}$(_git_prompt_info)
+${time}$(_aws_profile) $(_kubectl_context) $(_user_host)${_current_dir}$(_git_prompt_info)
 %{$fg[$CARETCOLOR]%}▶%{$resetcolor%} '
 
 PROMPT2='%{$fg[$CARETCOLOR]%}◀%{$reset_color%} '
@@ -13,6 +13,21 @@ RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_s
 
 local _current_dir="%{$fg_bold[blue]%}%~%{$reset_color%}"
 local _hist_no="%{$fg[grey]%}%h%{$reset_color%}"
+
+function _aws_profile() {
+  if [[ "$AWS_PROFILE" == *"prod" ]]; then
+		echo -n "%{$bg[red]%}"
+	else
+		echo -n "%{$bg[cyan]%}"
+	fi
+  echo "%{$fg[white]%} $AWS_PROFILE %{$reset_color%}"
+}
+
+function _kubectl_context() {
+	context=$(kubectl config current-context)
+	namespace=$(k config view --minify --output 'jsonpath={..namespace}')
+  echo "%{$bg[yellow]%}%{$fg[black]%} $context:$namespace %{$reset_color%}"
+}
 
 function _current_dir() {
   local _max_pwd_length="65"
